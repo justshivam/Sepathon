@@ -1,5 +1,6 @@
 from flask import Flask, request
 from website_footprint import calculateWebsiteFootprint
+import json
 
 app = Flask(__name__)
 BASE_URL = "/api/v1"
@@ -8,14 +9,15 @@ BASE_URL = "/api/v1"
 def hello_world():
     return "Hello From Backend"
 
-@app.route(BASE_URL + '/networkTraffic')
+@app.route(BASE_URL + '/networkTraffic', methods=['POST'])
 def networkTraffic():
-    url = request.args.get('url')
+    data = json.loads(request.data.decode('utf-8'))
+    url = data.get('url')
     data_used = 0
     if url is not None:
         data_used = calculateWebsiteFootprint(url)
     return {
-        'tranfers': data_used
+        'transfers': data_used
     }
 
 
