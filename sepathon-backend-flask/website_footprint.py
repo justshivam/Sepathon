@@ -1,8 +1,9 @@
-from urllib.request import urlopen
 from selenium import webdriver
 
 def calculateWebsiteFootprint(url):
-    driver = webdriver.Chrome()
+    driver_options = webdriver.ChromeOptions()
+    driver_options.add_argument('--headless=new')
+    driver = webdriver.Chrome(options=driver_options)
     #implicit wait
     driver.implicitly_wait(0.5)
     #url launch
@@ -18,4 +19,4 @@ def calculateWebsiteFootprint(url):
     return total_transfer
 
 if __name__ == '__main__':
-    calculateWebsiteFootprint('https://www.google.com/')
+    print(calculateWebsiteFootprint('https://www.google.com/'))
